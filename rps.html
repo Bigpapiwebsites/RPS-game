@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock, Paper, Scissors</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-image: url(rps.jpg);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;      
+        }
+
+        h1 {
+            color: yellow;
+        }
+
+        #choices {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .choice-button {
+            font-size: 18px;
+            margin: 0 10px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            color: red;
+            background-color: black;
+        }
+
+        .choice-button:hover {
+            transform: scale(1.1);
+        }
+
+        #result {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 20px;
+            color: greenyellow;
+            animation: fadeIn 3s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Rock, Paper, Scissors Game</h1>
+    <div id="choices">
+        <button class="choice-button" id="rock">Rock</button>
+        <button class="choice-button" id="paper">Paper</button>
+        <button class="choice-button" id="scissors">Scissors</button>
+    </div>
+    <div id="result"></div>
+
+    <script>
+        const choices = ["rock", "paper", "scissors"];
+
+        document.querySelectorAll(".choice-button").forEach(button => {
+            button.addEventListener("click", () => {
+                const playerChoice = button.id;
+                const computerChoice = choices[Math.floor(Math.random() * 3)];
+                const result = determineWinner(playerChoice, computerChoice);
+                displayResult(playerChoice, computerChoice, result);
+            });
+        });
+
+        function determineWinner(playerChoice, computerChoice) {
+            if (playerChoice === computerChoice) {
+                return "It's a tie!";
+            } else if (
+                (playerChoice === "rock" && computerChoice === "scissors") ||
+                (playerChoice === "paper" && computerChoice === "rock") ||
+                (playerChoice === "scissors" && computerChoice === "paper")
+            ) {
+                return "You win!";
+            } else {
+                return "you lose!";
+            }
+        }
+
+        function displayResult(playerChoice, computerChoice, result) {
+            const resultElement = document.getElementById("result");
+            resultElement.textContent = `You chose ${playerChoice}, Computer chose ${computerChoice}. ${result}`;
+            resultElement.style.animation = "fadeIn 1s"; // Reapply the animation
+        }
+    </script>
+</body>
+</html>
+
